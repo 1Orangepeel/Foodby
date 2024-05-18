@@ -3,40 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHICKEN</title>
+    <title>Fullscreen Pong Game</title>
     <style>
         body {
+            margin: 0;
             display: flex;
-            flex-direction: column;
-            justify-content: flex-start; /* Align items at the top */
+            justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-            background-color: #333; /* Dark grey background color */
-            color: #ff0000; /* Bright red text color */
+            background-color: #000;
+            overflow: hidden;
         }
-        .content {
-            flex: 1;
-        }
-        img {
-            max-width: 200%; /* Increase the image size by 20% */
-            max-height: 200%;
-            object-fit: contain;
-        }
-        .gif {
-            max-width: 100%;
-            margin-top: 20px; /* Adjust the margin to move the GIF up */
-        }
-        .text {
-            font-size: 50px; /* Font size 50 */
-            margin-top: 20px; /* Add margin for spacing */
+        canvas {
+            display: block;
         }
     </style>
 </head>
 <body>
-    <!-- Text at the top center -->
-    <div class="text">Fizz's favorite meal! Medium rare chicken with added extra hormones. </div>
+    <canvas id="pongCanvas"></canvas>
+    <script>
+        const canvas = document.getElementById('pongCanvas');
+        const ctx = canvas.getContext('2d');
 
-    <div class="content">
-        <img src="image.png" alt="Displayed Image">
-    </div>
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Adjusted sizes for larger playing field
+        let paddleHeight = 150, paddleWidth = 15, ballRadius = 15;
+        let playerX = 0, playerY = (canvas.height - paddleHeight) / 2;
+        let computerX = canvas.width - paddleWidth, computerY = (canvas.height - paddleHeight) / 2;
+        let ballX = canvas.width / 2, ballY = canvas.height / 2;
+        let ballDX = 2, ballDY = -2;
+
+        function drawPaddle(x, y) {
+            ctx.fillStyle = "white";
+            ctx.fillRect(x, y, paddleWidth, paddleHeight);
+        }
+
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
+            ctx.fillStyle = "white";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawPaddle(playerX, playerY);
+            drawPaddle(computerX, computerY);
+            drawBall();
+
+            if(ballX + ballDX > canvas.width - ballRadius || ballX + ballDX < ballRadius) {
+                ballDX = -ballDX;
+            }
+
+            if(ballY + ballDY > canvas.height - ballRadius || ballY + ballDY < ballRadius) {
+                ballDY = -ballDY;
+            }
+
+            ballX += ballDX;
+            ballY += ballDY;
+
+            requestAnimationFrame(draw);
+        }
+
+        draw();
+    </script>
+</body>
+</html>
