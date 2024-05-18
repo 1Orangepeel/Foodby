@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHICKEN/title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Align items at the top */
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #333; /* Dark grey background color */
+            color: #ff0000; /* Bright red text color */
+        }
+        .content {
+            flex: 1;
+        }
+        img {
+            max-width: 200%; /* Increase the image size by 20% */
+            max-height: 200%;
+            object-fit: contain;
+        }
+        .gif {
+            max-width: 100%;
+            margin-top: 20px; /* Adjust the margin to move the GIF up */
+        }
+        .text {
+            font-size: 50px; /* Font size 50 */
+            margin-top: 20px; /* Add margin for spacing */
+        }
+    </style>
+</head>
+<body>
+    <!-- Text at the top center -->
+    <div class="text">Fizz's secret medium rare chicken</div>
+
+    <div class="content">
+        <img src="image.png" alt="Displayed Image">
+    </div>
